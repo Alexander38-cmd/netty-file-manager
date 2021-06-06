@@ -49,3 +49,34 @@
 
 В данном курсе предлагается оформить клиентскую часть в виде 
 GUI-приложения на основе библиотек JavaFX или Swing.
+
+СКРИПТ для таблицы users:
+PRAGMA foreign_keys = 0;
+
+CREATE TABLE sqlitestudio_temp_table AS SELECT *
+                                          FROM users;
+
+DROP TABLE users;
+
+CREATE TABLE users (
+    id       INTEGER PRIMARY KEY AUTOINCREMENT,
+    login    TEXT    UNIQUE,
+    password TEXT,
+    nickname TEXT    UNIQUE
+);
+
+INSERT INTO users (
+                      id,
+                      login,
+                      password,
+                      nickname
+                  )
+                  SELECT id,
+                         login,
+                         password,
+                         nickname
+                    FROM sqlitestudio_temp_table;
+
+DROP TABLE sqlitestudio_temp_table;
+
+PRAGMA foreign_keys = 1;
